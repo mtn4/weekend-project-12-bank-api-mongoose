@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 
 app.use(express.static(path.join(__dirname, "build")));
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
 });
 
 app.listen(process.env.PORT, (error) => {
