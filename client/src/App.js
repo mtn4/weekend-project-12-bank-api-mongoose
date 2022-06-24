@@ -53,9 +53,9 @@ function App() {
     const newUser = {
       name: e.target[0].value,
       passportID: e.target[1].value,
-      cash: e.target[2].value,
-      credit: e.target[3].value,
-      isActive: e.target[4].value,
+      cash: e.target[2].value ? e.target[2].value : 0,
+      credit: e.target[3].value ? e.target[3].value : 0,
+      isActive: e.target[4].value === "" ? true : e.target[4].value,
     };
     await axios.post(`${URI}/users`, newUser);
     setUsers(null);
@@ -181,11 +181,11 @@ function App() {
                 <form onSubmit={handleSubmitUser}>
                   <div>
                     <label>Name: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" minLength={9} maxLength={9} required />
                   </div>
                   <div>
                     <label>Cash: </label>
@@ -208,11 +208,11 @@ function App() {
                 <form onSubmit={handleSubmitDeposit}>
                   <div>
                     <label>Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Amount: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <button>Submit</button>
                 </form>
@@ -223,11 +223,11 @@ function App() {
                 <form onSubmit={handleSubmitCredit}>
                   <div>
                     <label>Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Amount: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <button>Submit</button>
                 </form>
@@ -238,11 +238,11 @@ function App() {
                 <form onSubmit={handleSubmitWithdraw}>
                   <div>
                     <label>Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Amount: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <button>Submit</button>
                 </form>
@@ -253,15 +253,15 @@ function App() {
                 <form onSubmit={handleSubmitTransfer}>
                   <div>
                     <label>Sender Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Recipient Passport ID: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <div>
                     <label>Amount: </label>
-                    <input type="text" />
+                    <input type="text" required />
                   </div>
                   <button>Submit</button>
                 </form>
