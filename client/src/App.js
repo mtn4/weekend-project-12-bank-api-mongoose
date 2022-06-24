@@ -14,16 +14,35 @@ const URI = (() => {
 function App() {
   const [users, setUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [width, setWidth] = useState("0");
 
   const getUsers = async () => {
-    console.log(URI);
     setIsLoading(true);
     const users = await axios.get(`${URI}/users`);
     setUsers(users.data);
-    console.log(users);
     setIsLoading(false);
   };
-
+  const handleDeleteUser = async (e, passportID) => {
+    setIsLoading(true);
+    await axios.delete(`${URI}/users/delete/${passportID}`);
+    setUsers(null);
+    getUsers();
+    setIsLoading(false);
+  };
+  const handleUpdateUser = async (name, passportID, cash, credit, isActive) => {
+    setIsLoading(true);
+    const obj = {
+      name,
+      passportID,
+      cash,
+      credit,
+      isActive,
+    };
+    await axios.put(`${URI}/users/update`, obj);
+    setUsers(null);
+    getUsers();
+    setIsLoading(false);
+  };
   const renderUsersCards = () => {
     return users.map((user, index) => (
       <Card
@@ -33,6 +52,8 @@ function App() {
         cash={user.cash}
         credit={user.credit}
         isActive={user.isActive}
+        handleDeleteUser={handleDeleteUser}
+        handleUpdateUser={handleUpdateUser}
       />
     ));
   };
@@ -44,8 +65,19 @@ function App() {
       ) : (
         <div>
           <h1>Bank API Admin Dashboard</h1>
-          <button onClick={getUsers}>Display All Users</button>
-          {users && renderUsersCards()}
+          <div className="btns">
+            <button onClick={getUsers}>Display All Users</button>
+            <button onClick={getUsers}>Add User</button>
+            <button onClick={getUsers}>Deposit</button>
+            <button onClick={getUsers}>Credit</button>
+            <button onClick={getUsers}>Withdraw</button>
+            <button onClick={getUsers}>Transfer</button>
+          </div>
+          {users && <div className="grid">{renderUsersCards()}</div>}
+          <div className="overlay" style={{ width: `${width}` }}>
+            <div className="closebtn">&times;</div>
+            <div className="overlay-content"></div>
+          </div>
         </div>
       )}
     </div>
