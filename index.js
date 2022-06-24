@@ -10,9 +10,6 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// console.log(__filename);
-// console.log(__dirname);
-
 app.use(express.static(path.join(__dirname, "build")));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client/build", "index.html"));

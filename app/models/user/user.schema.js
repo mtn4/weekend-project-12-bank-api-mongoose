@@ -4,16 +4,16 @@ import validator from "validator";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "name is required"],
+    required: [true, "Please enter a name"],
   },
   passportID: {
     type: Number,
-    unique: [true, "a user with this passport ID already exists"],
+    unique: [true, "User with the same passport ID already exists"],
     dropDups: true,
-    required: [true, "passport ID is required"],
+    required: [true, "Please enter a passport ID"],
     validate: {
       validator: (val) => val.toString().length === 9,
-      message: `Passport ID must be 9 digits`,
+      message: `Passport ID length must be 9 digits`,
     },
   },
   cash: {
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   credit: {
     type: Number,
-    min: [0, "credit must be a positive amount"],
+    min: [0, "Credit amount must be a postive number"],
     default: 0,
   },
   isActive: {
